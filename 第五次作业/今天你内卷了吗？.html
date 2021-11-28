@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lv2</title>
+</head>
+
+<body>
+
+    <div>
+        <b>请选择您的爱好</b>
+        <br />
+    </div>
+
+    <div id="divlist">
+        <input type="checkbox" value="内卷" id="checkbox" >内卷
+        <input type="checkbox" value="疯狂内卷" id="checkbox" >疯狂内卷
+        <input type="checkbox" value="拼命内卷" id="checkbox" >拼命内卷
+        <input type="checkbox" value="使劲内卷" id="checkbox">使劲内卷
+        <br />
+    </div>
+    <div id="divlist2">
+        <input type="button" value="全选" id="button1">
+        <input type="button" value="全不选" id="button2">
+        <input type="button" value="反选" id="button3">
+    </div>
+    <script>
+        let checkboxs = document.querySelectorAll('input');
+        let button1 = document.getElementById("button1");
+        let button2 = document.getElementById('button2');
+        let button3 = document.getElementById('button3');
+        console.log(checkboxs); 
+        button1.onclick = function () {
+            for (let i = 0; i < checkboxs.length; i++) {
+                checkboxs[i].checked=true;
+            }
+        }
+        button2.onclick = function () {
+            for (let i = 0; i < checkboxs.length; i++) {
+                checkboxs[i].checked=false;
+            }
+        }
+        button3.onclick = function () {
+            for (let i = 0; i < checkboxs.length; i++) {
+                if(checkboxs[i].checked==true)
+                checkboxs[i].checked=false;
+                else
+                checkboxs[i].checked=true;
+            }
+        }
+    </script>
+</body>
+
+</html>
