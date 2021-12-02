@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网易轮播图</title>
+    <style>
+        .container {
+            margin: 100px auto;
+            width: 800px;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            transform-style: preserve-3d;
+        }
+
+        img {
+            height: 300px;
+            width: 500px;
+        }
+
+        ul li {
+            list-style: none;
+            position: absolute;
+            left: 150px;
+            top: 50px;
+            transition-duration:1s;
+        }
+
+        #pre {
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            margin-top: -50px;
+            font-size: 100px;
+            color: rgb(167, 163, 163);
+            text-decoration: none;
+            z-index: 101;
+        }
+
+        #aft {
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            margin-top: -50px;
+            font-size: 100px;
+            color: rgb(167, 163, 163);
+            text-decoration: none;
+            z-index: 101;
+        }
+
+        #btn {
+            /* background-color: aqua; */
+            position: absolute;
+            bottom: 25px;
+            height: 20px;
+            width: 400px;
+            text-align: center;
+            left: 50%;
+            margin-left: -200px;
+        }
+
+        button {
+            margin: 7px;
+            height: 15px;
+            width: 5px;
+            cursor: pointer;
+            border-radius: 50%;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <ul class="image" id="image">
+            <li id="i1"><img src="image1/p1.jpeg" /></li>
+            <li id="i2"><img src="image1/p2.jpeg" /></li>
+            <li id="i3"><img src="image1/p3.jpeg" /></li>
+            <li id="i4"><img src="image1/p4.jpeg" /></li>
+            <li id="i5"><img src="image1/p5.jpeg" /></li>
+            <li id="i6"><img src="image1/p6.jpeg" /></li>
+        </ul>
+        <a id="pre" href="#">
+            < </a>
+                <a id="aft" href="#">></a>
+                <div id="btn"></div>
+    </div>
+    <script>
+        // 1.获取元素
+        let timer = setInterval(next, 3000);
+        let lis = document.querySelectorAll('li');
+        let btns = new Array();
+        // console.log(lis)
+        for (let i = 0; i < lis.length; i++) {
+            lis[i].addEventListener('mouseenter', function () {
+                clearInterval(timer);
+                // console.log("hello")
+            })
+
+            lis[i].addEventListener('mouseleave', function () {
+                timer = setInterval(next, 3000);
+            })
+        }
+        let i1 = document.getElementById('i1');
+        let i2 = document.getElementById('i2');
+        let i3 = document.getElementById('i3');
+        let i4 = document.getElementById('i4');
+        let i5 = document.getElementById('i5');
+        let i6 = document.getElementById('i6');
+        let imgs = new Array();
+        imgs.push(i1, i2, i3, i4, i5, i6);
+        // console.log(imgs)
+        let lst = imgs.length - 1;
+        // console.log(imgs)
+        // 2.构图
+        imgs[lst].style.transform = 'translateX(200px) translateZ(40px) scale(0.8)';
+        imgs[lst - 1].style.zIndex = 100;
+        imgs[lst - 2].style.transform = 'translateX(-200px) translateZ(40px) scale(0.8)';
+        // 3.下一页函数
+        function next() {
+            let num1 = imgs[lst];
+            imgs.pop();
+            imgs.unshift(num1);
+            for (let i = 0; i < imgs.length; i++) {
+                imgs[i].style.zIndex = 1;
+                imgs[i].style.transform = 'scale(1)';
+                imgs[i].style.display = 'none';
+
+            }
+            imgs[lst].style.display='block';
+            imgs[lst-1].style.display='block';
+            imgs[lst-2].style.display='block';
+            imgs[0].style.display='block';
+            imgs[lst - 1].style.zIndex = 100;
+            imgs[0].style.transform='scale(0.8)';
+            imgs[lst - 2].style.transform = 'translateX(-200px) translateZ(40px) scale(0.8)';
+            imgs[lst].style.transform = 'translateX(200px) translateZ(40px) scale(0.8)';
+            cag();
+        }
+        //4.上一页函数
+        function prev() {
+            let num2 = imgs[0];
+            imgs.shift();
+            imgs.push(num2);
+            for (let i = 0; i < imgs.length; i++) {
+                imgs[i].style.zIndex = 1;
+                imgs[i].style.transform = 'scale(1)';
+                imgs[i].style.display = 'none';
+            }
+            imgs[lst].style.display='block';
+            imgs[lst- 2].style.display='block';
+            imgs[lst- 1].style.display='block';
+            imgs[0].style.display='block';
+            imgs[lst - 1].style.zIndex = 100;
+            imgs[0].style.transform='scale(0.8)';
+            imgs[lst - 2].style.transform = 'translateX(-200px) translateZ(40px) scale(0.8)';
+            imgs[lst].style.transform = 'translateX(200px) translateZ(40px) scale(0.8)';
+            cag();
+        }
+        // 5.上一页下一页点击事件
+        let aft = document.getElementById('aft');
+        let pre = document.getElementById('pre');
+        aft.addEventListener('click', function () {
+            clearInterval(timer);
+            next();
+            timer = setInterval(next, 3000);
+        })
+        pre.addEventListener('click', function () {
+            clearInterval(timer);
+            prev();
+            timer = setInterval(next, 3000);
+        })
+        // 6.动态生成下排按钮
+
+        for (let i = 0; i < imgs.length; i++) {
+            let an = document.createElement('button');
+            let div = document.getElementById('btn');
+            div.appendChild(an);
+            an.name = 'i' + [6 - i];
+            btns.push(an);
+            // console.log(btns);
+        }
+        // 7.按钮颜色变化函数
+        btns[1].style.backgroundColor = 'red';
+        function cag() {
+            for (let i = 5; i >= 0; i--) {
+                if (btns[i].name == imgs[lst - 1].id) {
+                    btns[i].style.backgroundColor = 'red'
+                }
+                else {
+                    btns[i].style.backgroundColor = 'white'
+                }
+            }
+        }
+        // 8.按钮与图片链接
+        for(let i = 0; i < btns.length; i++){
+            btns[i].addEventListener('click', function () {
+                clearInterval(timer);
+
+                for(let j=lst-1;imgs[lst-1].id!=btns[i].name;j++){
+                    next();
+                }
+                timer = setInterval(next, 3000);
+            })
+        }
+        // for (let i = 0; i < btns.length; i++) {
+        //     btns[i].onclick = function () {
+        //         // 颜色变化
+        //         for (let i = 5; i >= 0; i--) {
+        //             btns[i].style.backgroundColor = 'white';
+        //         }
+        //         btns[i].style.backgroundColor = 'red';
+        //         // 图片变化
+        //         if (i == 0) {
+        //             for (let i = 0; i < lis.length; i++) {
+        //                 lis[i].style.zIndex = 1;
+        //                 lis[i].style.transform = 'tanslateX(0)';
+        //             }
+        //             clearInterval(timer);
+        //             lis[0].style.zIndex = 100;
+        //             lis[0].style.transform = 'scale(1)';
+        //             lis[5].style.zIndex = 90;
+        //             lis[5].style.transform = 'translateX(-200px) translateZ(40px) scale(0.8)';
+        //             lis[i + 1].style.zIndex = 90;
+        //             lis[i + 1].style.transform = 'translateX(200px) translateZ(40px) scale(0.8)';
+        //             timer = setInterval(next, 3000);
+        //         }
+        //         else if (i == 5) {
+        //             for (let i = 0; i < lis.length; i++) {
+        //                 lis[i].style.zIndex = 1;
+        //                 lis[i].style.transform = 'tanslateX(0)';
+        //             }
+        //             clearInterval(timer);
+        //             lis[i].style.zIndex = 100;
+        //             lis[i].style.transform = 'scale(1)';
+        //             lis[i - 1].style.zIndex = 90;
+        //             lis[i - 1].style.transform = 'translateX(-200px) translateZ(40px) scale(0.8)';
+        //             lis[0].style.zIndex = 90;
+        //             lis[0].style.transform = 'translateX(200px) translateZ(40px) scale(0.8)';
+        //             timer = setInterval(next, 3000);
+        //         }
+        //         else {
+        //             for (let i = 0; i < lis.length; i++) {
+        //                 lis[i].style.zIndex = 1;
+        //                 lis[i].style.transform = 'tanslateX(0)';
+        //             }
+        //             clearInterval(timer);
+        //             lis[i].style.zIndex = 100;
+        //             lis[i].style.transform = 'scale(1)';
+        //             lis[i - 1].style.zIndex = 90;
+        //             lis[i - 1].style.transform = 'translateX(-200px) translateZ(40px) scale(0.8)';
+        //             lis[i + 1].style.zIndex = 90;
+        //             lis[i + 1].style.transform = 'translateX(200px) translateZ(40px) scale(0.8)';
+        //             timer = setInterval(next, 3000);
+        //         }
+        //     }
+        // }
+        console.log(lis);
+        console.log(imgs);
+        console.log(btns);
+
+    </script>
+</body>
+
+</html>
