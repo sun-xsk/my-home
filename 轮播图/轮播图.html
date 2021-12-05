@@ -161,6 +161,7 @@
             imgs[lst].style.transform = 'translateX(200px) translateZ(40px) scale(0.8)';
             cag();
         }
+
         // 5.上一页下一页点击事件
         let aft = document.getElementById('aft');
         let pre = document.getElementById('pre');
@@ -175,7 +176,6 @@
             timer = setInterval(next, 3000);
         })
         // 6.动态生成下排按钮
-
         for (let i = 0; i < imgs.length; i++) {
             let an = document.createElement('button');
             let div = document.getElementById('btn');
@@ -184,6 +184,7 @@
             btns.push(an);
             // console.log(btns);
         }
+
         // 7.按钮颜色变化函数
         btns[1].style.backgroundColor = 'red';
         function cag() {
@@ -200,13 +201,13 @@
         for(let i = 0; i < btns.length; i++){
             btns[i].addEventListener('click', function () {
                 clearInterval(timer);
-
                 for(let j=lst-1;imgs[lst-1].id!=btns[i].name;j++){
                     next();
                 }
                 timer = setInterval(next, 3000);
             })
         }
+        
         // for (let i = 0; i < btns.length; i++) {
         //     btns[i].onclick = function () {
         //         // 颜色变化

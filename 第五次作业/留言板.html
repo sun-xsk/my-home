@@ -48,6 +48,7 @@
     let as = document.querySelectorAll('a');
     for (let i = 0; i < as.length; i++) {
         as[i].onclick = function () {
+            console.log(this.parentNode)
             ul.removeChild(this.parentNode);
         }
     }
