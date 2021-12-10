@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- part1 -->
+    <text id="text1"></text><br />
+    <!-- part2 -->
+    <input id="msg1" type="text">
+    <button id="btn1">提交</button><br />
+    <text id="text2"></text><br />
+    <!-- part3 -->
+    用户名：<input type="text" id="zh"><br />
+    密码：<input type="password" id="mm"><br />
+    <button id="btn2">登录</button><br />
+    <text id="text3"></text><br />
+    <!-- part4 -->
+    
+</body>
+<script>
+    let text1 = document.getElementById("text1");
+    // 1.获取题目
+    function f1() {
+        fetch("http://anonym.ink:8000/homework/get_homework", {
+            method: 'POST',
+        }).then((response) => {
+            return response.text()
+        }).then((response) => {
+            text1.innerHTML = response;
+            console.log(response)
+        })
+    }
+    f1();
+    // 2.发送信息
+    let text2 = document.getElementById("text2");
+    let btn1 = document.getElementById("btn1");
+    let msg1 = document.getElementById("msg1");
+    let fD1 = new FormData();
+    function f2(value) {
+        fetch("http://anonym.ink:8000/homework/fufubot_test/", {
+            method: 'POST',
+            body: value,
+        }).then((res) => {
+            return res.text()
+        }).then((res) => {
+            text2.innerHTML = res;
+            console.log(res);
+        })
+    }
+    btn1.addEventListener('click', function () {
+        fD1.append('message', msg1.value);
+        f2(fD1);
+    })
+    //3.登录
+    let zh = document.getElementById("zh");
+    let mm = document.getElementById("mm");
+    let btn2 = document.getElementById("btn2");
+    let text3 = document.getElementById("text3");
+    function f3(x) {
+        fetch("http://anonym.ink:8000/homework/auth/login", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(x),
+        }).then((response) => {
+            return response.json()
+        }).then((response) => {
+            console.log(response.data);
+            localStorage.setItem('token', response.data);
+        })
+        // .then(fetch("http://anonym.ink:8000/homework/auth/next_level", {
+        //     method: 'GET',
+        //     headers: {
+        //         'Authorization': 'EARER ${token}'
+        //     }
+        // })).then((response) => {
+        //     return response.json()
+        // }).then((response) => {
+        //     text3.innerHTML = response.text;
+        //     console.log(response.text)
+        // })
+    }
+    function f4() {
+        const token = localStorage.getItem("token");
+        fetch("http://anonym.ink:8000/homework/auth/next_level",{
+            method: 'GET',
+            headers:{
+                'Authorization':`BEARER ${token}`,
+            },
+        }).then((response) => {
+            return response.text()
+        }).then((response) => {
+            text3.innerHTML = response;
+            console.log(response)
+        })
+    }
+    btn2.addEventListener('click', function () {
+        const data = {
+            username: zh.value,
+            password: mm.value,
+        }
+        f3(data);
+        f4();
+    })
+
+</script>
+
+</html>
