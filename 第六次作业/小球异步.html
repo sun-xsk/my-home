@@ -37,30 +37,30 @@
 <script>
        let balls = document.querySelectorAll('div');
     // 1.回调函数
-    // function move(ball, target, callback) {
-    //     setTimeout(function () {
-    //         let marginLeft = parseInt(ball.style.marginLeft, 10);
-    //         if (marginLeft === target) {
-    //             callback && callback()
-    //         } else {
-    //             if (marginLeft < target) {
-    //                 marginLeft++;
-    //             } else {
-    //                 marginLeft--;
-    //             }
-    //             ball.style.marginLeft = marginLeft + 'px';
-    //             move(ball, target, callback)
-    //         }
-    //     }, 10)
-    // }
+    function move(ball, target, callback) {
+        setTimeout(function () {
+            let marginLeft = parseInt(ball.style.marginLeft, 10);
+            if (marginLeft === target) {
+                callback && callback()
+            } else {
+                if (marginLeft < target) {
+                    marginLeft++;
+                } else {
+                    marginLeft--;
+                }
+                ball.style.marginLeft = marginLeft + 'px';
+                move(ball, target, callback)
+            }
+        }, 10)
+    }
 
-    // move(balls[0], 300, function () {
-    //     move(balls[1], 300, function () {
-    //         move(balls[2], 300, function () {
-    //         })
-    //     })
-    // })
-    // console.log(balls[0])
+    move(balls[0], 300, function () {
+        move(balls[1], 300, function () {
+            move(balls[2], 300, function () {
+            })
+        })
+    })
+    console.log(balls[0])
 
     // 2.promise链式回调
     // var Promise = window.Promise;
@@ -90,33 +90,34 @@
     //     .then(() => { return move(balls[2], 300) })
 
     // 3.saync/await
-    function move(ball, target) {
-        return new Promise((resolve, reject) => {
-            function a() {
-                setTimeout(function () {
-                    let marginLeft = parseInt(ball.style.marginLeft, 10);
-                    if (marginLeft === target) {
-                        resolve(ball, target);
-                    } else {
-                        if (marginLeft < target) {
-                            marginLeft++;
-                        } else {
-                            marginLeft--;
-                        }
-                        ball.style.marginLeft = marginLeft + 'px';
-                        a();
-                    }
-                }, 10)
-            }
-            a();
-        })
-    }
-    async function b(){
-        await move(balls[0], 300);
-        await move(balls[1], 300);
-        await move(balls[2], 300);
-    }
-    b();
+    // function move(ball, target) {
+    //     return new Promise((resolve, reject) => {
+    //         function a() {
+    //             setTimeout(function () {
+    //                 let marginLeft = parseInt(ball.style.marginLeft, 10);
+    //                 if (marginLeft === target) {
+    //                     resolve(ball, target);
+    //                 } else {
+    //                     if (marginLeft < target) {
+    //                         marginLeft++;
+    //                     } else {
+    //                         marginLeft--;
+    //                     }
+    //                     ball.style.marginLeft = marginLeft + 'px';
+    //                     a();
+    //                 }
+    //             }, 10)
+    //         }
+    //         a();
+    //     })
+    // }
+
+    // async function b(){
+    //     await move(balls[0], 300);
+    //     await move(balls[1], 300);
+    //     await move(balls[2], 300);
+    // }
+    // b();
 </script>
 
 </html>

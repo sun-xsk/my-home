@@ -75,17 +75,6 @@
             console.log(response.data);
             localStorage.setItem('token', response.data);
         })
-        // .then(fetch("http://anonym.ink:8000/homework/auth/next_level", {
-        //     method: 'GET',
-        //     headers: {
-        //         'Authorization': 'EARER ${token}'
-        //     }
-        // })).then((response) => {
-        //     return response.json()
-        // }).then((response) => {
-        //     text3.innerHTML = response.text;
-        //     console.log(response.text)
-        // })
     }
     function f4() {
         const token = localStorage.getItem("token");
