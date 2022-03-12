@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" style="width:200px">
+</body>
+<script>
+    const input = document.querySelector('input');
+
+    // 防抖优化
+    // function debounce(fn, delay = 1000) {
+    //     let timer = null;
+    //     return function () {
+    //         if (timer) {
+    //             clearInterval(timer);
+    //         }
+    //         timer = setTimeout(() => {
+    //             timer = null;
+    //             fn();
+    //         }, delay)
+    //     }
+    // }
+    // input.addEventListener('keyup', debounce(function () {
+    //     console.log(input.value)
+    // }))
+
+
+    // 节流优化
+
+    function throttle(fn, delay = 1000) {
+        let timer = null;
+        let firstTime = true;
+        return function () {
+            if (firstTime) {
+                fn.apply(this, arguments);
+                return firstTime = false;
+            }
+            if (timer) {
+                return false;
+            }
+            timer = setTimeout(function () {
+                timer = null;
+                fn.apply(this, arguments);
+            },delay);
+        }
+    }
+    input.addEventListener('keyup', throttle(function () {
+        console.log(input.value)
+    },3000))
+</script>
+
+</html>
