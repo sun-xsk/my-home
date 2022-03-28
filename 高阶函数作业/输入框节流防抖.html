@@ -33,27 +33,55 @@
 
 
     // 节流优化
+    // function throttle(fn, delay = 1000) {
+    //     let timer = null;
+    //     let firstTime = true;
+    //     return function () {
+    //         if (firstTime) {
+    //             fn.apply(this, arguments);
+    //             return firstTime = false;
+    //         }
+    //         if (timer) {
+    //             return false;
+    //         }
+    //         timer = setTimeout(function () {
+    //             timer = null;
+    //             fn.apply(this, arguments);
+    //         }, delay);
+    //     }
+    // }
 
+    // 时间戳节流
     function throttle(fn, delay = 1000) {
-        let timer = null;
+        let logTime;
         let firstTime = true;
         return function () {
+            let nowTime = Date.now();
             if (firstTime) {
                 fn.apply(this, arguments);
+                logTime = Date.now();
                 return firstTime = false;
             }
-            if (timer) {
-                return false;
-            }
-            timer = setTimeout(function () {
-                timer = null;
+            if (nowTime >= logTime+delay) {
                 fn.apply(this, arguments);
-            },delay);
+                logTime = Date.now();
+            }
+
         }
     }
+
     input.addEventListener('keyup', throttle(function () {
         console.log(input.value)
-    },3000))
+    }, 3000))
+
+    // input.addEventListener('keyup', function () {
+    //     let nx = Date.now();
+    //     let nowTime = new Date();
+    //     console.log(nowTime.getMilliseconds());
+    //     console.log(nx);
+    // })
+
+
 </script>
 
 </html>

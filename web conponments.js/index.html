@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <template id="news">
+        <div class="father">
+            <slot name="text" class="text"></slot>
+            <slot name="author" class="author"></slot>
+        </div>
+    </template>
+
+    <news-div age="18">
+        <span slot="text">今天天气真不错</span>
+        <span slot="author">xsk</span>
+    </news-div>
+
+    <news-div age="18">
+        <span slot="text">太热了</span>
+        <span slot="author">zwj</span>
+    </news-div>
+
+    <news-div  age="18">
+        <span slot="text">还是家里舒服</span>
+        <span slot="author">zjj</span>
+    </news-div>
+
+</body>
+<script type="text/javascript" src="./index.js"></script>
+
+</html>

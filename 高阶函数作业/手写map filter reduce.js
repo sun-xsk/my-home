@@ -55,3 +55,4 @@ let d2= a.reduce(function(a,b){
 })
 console.log(d);
 console.log(d2);
+
